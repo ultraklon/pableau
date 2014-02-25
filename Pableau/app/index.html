@@ -4,16 +4,38 @@
   <meta charset="utf-8">
   <title>My AngularJS App</title>
   <link rel="stylesheet" href="css/app.css"/>
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
-
-  <div ng-view></div>
-
-  <div>Angular seed app: v<span app-version></span></div>
+  <div file-dropzone ng-controller="GeneralController" class="main">
+    <!--ul class="menu">
+      <li><a href="#/view1">view1</a></li>
+      <li><a href="#/view2">view2</a></li>
+    </ul>
+  
+    <div ng-view></div>
+  
+    <div>Angular seed app: v<span app-version></span></div-->
+    <div>
+      <span class="dropdown" ng-controller="DropdownFile">
+        <a class="dropdown-toggle">
+          File
+        </a>
+        <ul class="dropdown-menu">
+          <li ng-repeat="choice in items">
+            <a>{{choice}}</a>
+          </li>
+        </ul>
+      </span>
+    </div>
+    <div ng-controller="NonNumericColumnController" class="NonNumericColumnController">
+.
+    </div>
+    <div ng-controller="NumericColumnController" class="NumericColumnController">    
+.
+    </div>
+<button value="">test</button>
+  </div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
@@ -23,7 +45,13 @@
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
+  <script src="js/DropDownMenusController.js"></script>
+  <script src="js/NonNumericColumnController.js"></script>
+  <script src="js/NumericColumnController.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
+  <script src="js/FileSelectorDirective.js"></script>
+  <script src="js/FileDropDirective.js"></script>
+  <script src="lib/bootstrap/ui-bootstrap-0.10.0.js"></script>
 </body>
 </html>

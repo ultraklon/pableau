@@ -1,5 +1,8 @@
 /* app css stylesheet */
 
+/*for angular-ui bootstrap*/
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
 .menu {
   list-style: none;
   border-bottom: 0.1em solid black;
@@ -27,4 +30,38 @@
 .menu > li:nth-child(1):before {
   content: "";
   padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+}
+
+.main {
+  height: 100%;
+}
+
+.NonNumericColumnController {
+  background-color:blue;
+  min-width: 100px;
+  max-width: 200px;
+  width: 15%;
+  height: 60%;
+}
+
+.NumericColumnController {
+  background-color:red;
+  min-width: 100px;
+  max-width: 200px;
+  width: 15%;
+  height: 40%;
 }
