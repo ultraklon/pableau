@@ -10,13 +10,22 @@ moduleForDirectives.directive('fileDropzone', function() {
       fileName: '='
     },
     link: function(scope, element, attrs) {
-      var checkSize, isTypeValid, processDragOverOrEnter, validMimeTypes;
+      var checkSize, isTypeValid, processDragOverOrEnter, validMimeTypes, processDrop;
       processDragOverOrEnter = function(event) {
         if (event != null) {
           event.preventDefault();
         }
         event.dataTransfer.effectAllowed = 'copy';
         return false;
+      };
+      processDrop = function(event) {
+        var file, name, reader, size, type;
+        if (event != null) {
+          event.preventDefault();
+        }
+        file = event.dataTransfer.files[0];
+        readFile(file);
+        return true;
       };
       validMimeTypes = attrs.fileDropzone;
       checkSize = function(size) {
@@ -39,31 +48,7 @@ moduleForDirectives.directive('fileDropzone', function() {
       };
       element.bind('dragover', processDragOverOrEnter);
       element.bind('dragenter', processDragOverOrEnter);
-      return element.bind('drop', function(event) {
-        var file, name, reader, size, type;
-        if (event != null) {
-          event.preventDefault();
-        }
-        file = event.dataTransfer.files[0];
-        alert("sasadsads");
-        return true;
-      });
-    }
-  };
-});
-
-moduleForDirectives.directive('file', function() {
-  return {
-    scope: {
-      file: '='
-    },
-    link: function(scope, el, attrs) {
-      el.bind('change', function(event) {
-        var files = event.target.files;
-        var file = files[0];
-        scope.file = file ? file: undefined;
-        scope.$apply();
-      });
+      element.bind('drop', processDrop);
     }
   };
 });

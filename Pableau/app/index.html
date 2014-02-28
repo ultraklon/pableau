@@ -16,25 +16,33 @@
     <div ng-view></div>
   
     <div>Angular seed app: v<span app-version></span></div-->
-    <div>
+    <div class="topMenuBar">
       <span class="dropdown" ng-controller="DropdownFile">
         <a class="dropdown-toggle">
           File
         </a>
         <ul class="dropdown-menu">
           <li ng-repeat="choice in items">
-            <a>{{choice}}</a>
+            <a ng-click="choice.action()">{{choice.label}}</a>
           </li>
         </ul>
       </span>
     </div>
-    <div ng-controller="NonNumericColumnController" class="NonNumericColumnController">
-.
+    <div class="workingDataArea" ng-controller="FileOpenController">
+      <div ng-controller="NonNumericColumnController" class="NonNumericColumnController">
+        .
+      </div>
+      <div ng-controller="NumericColumnController" class="NumericColumnController">    
+        .
+      </div>
     </div>
-    <div ng-controller="NumericColumnController" class="NumericColumnController">    
-.
-    </div>
-<button value="">test</button>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-controller="FileOpenController" class="modal-header">
+          <button ng-click="openTheFile(param.file)">go</button>
+          <input type="file" data-file="param.file" />
+          <button ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
   </div>
 
   <!-- In production use:
@@ -42,16 +50,17 @@
   -->
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-route.js"></script>
+  <script src="lib/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
   <script src="js/DropDownMenusController.js"></script>
+  <script src="js/FileOpenController.js"></script>
   <script src="js/NonNumericColumnController.js"></script>
   <script src="js/NumericColumnController.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="js/FileSelectorDirective.js"></script>
   <script src="js/FileDropDirective.js"></script>
-  <script src="lib/bootstrap/ui-bootstrap-0.10.0.js"></script>
 </body>
 </html>

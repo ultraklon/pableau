@@ -5,7 +5,7 @@ var moduleForDirectives = angular.module('myApp.directives');
 moduleForDirectives.directive('file', function() {
   return {
     scope: {
-      file: '='
+      file: '=',
     },
     link: function(scope, el, attrs) {
       el.bind('change', function(event) {
@@ -17,3 +17,4 @@ moduleForDirectives.directive('file', function() {
     }
   };
 });
+
