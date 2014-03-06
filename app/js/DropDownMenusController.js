@@ -1,6 +1,6 @@
 var moduleForControllers = angular.module('myApp.controllers');
 
-moduleForControllers.controller('DropdownFile', ['$scope', '$modal', function($scope, $modal) {
+moduleForControllers.controller('DropdownFile', ['$scope', '$modal', 'dataCommunicatorService', function($scope, $modal, dataCommunicatorService) {
   $scope.items = [{
     label: "Open",
     action: function() {

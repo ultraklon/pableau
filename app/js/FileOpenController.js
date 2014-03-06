@@ -2,15 +2,14 @@
 
 var moduleForControllers = angular.module('myApp.controllers');
 
-moduleForControllers.controller('FileOpenController', ['$scope', function($scope) {
-}]);
+moduleForControllers.controller('FileOpenController', ['$scope', function($scope) {}]);
 
-var FileOpenControllerFunction = function($scope, $modalInstance) {
-  $scope.cancel = function(){
+var FileOpenControllerFunction = function($scope, $modalInstance, dataCommunicatorService) {
+  $scope.cancel = function() {
     $modalInstance.close();
   }
   $scope.openTheFile = function(theFile) {
-    readFile(theFile)
+    readFile(theFile, dataCommunicatorService);
     $modalInstance.close();
   }
 }
@@ -35,17 +34,47 @@ function buildTestConfig() {
   return obj;
 }
 
-function readFile(fileRef, callback) {
+function readFile(fileRef, dataCommunicatorService, rootScope) {
   var reader = new FileReader();
   // Closure to capture the file information.
-  reader.onloadend = (function(fileRef) {
+  reader.onloadend = (function(fileRef, rootScope) {
     return function(e) {
-      alert(CSVToArray(e.target.result, ",")[0].length);
-      alert(CSVToArray(e.target.result, ","));
+      var data = CSVToArray(e.target.result, ",");
+      determineFields(data, dataCommunicatorService.content.fields);
+      rootScope.$apply();
     };
-  })(fileRef);
-
+  })(fileRef, rootScope);
   reader.readAsText(fileRef);
+}
+
+//goes through all the cells, create the field objects and infers it's type and other properties
+function determineFields(data, fields) {
+  var numPattern = new RegExp("^-?\\d*(\\.\\d+)?$");
+  for (var line in data) {
+    if(line==0){
+      for (var column in data[line]) {
+        fields[column] = new Object();
+        fields[column].name = data[line][column];
+        //every field is a numeric until the oposite is demonstrated
+        fields[column].type = "numeric";
+      }
+    } else {
+      for (var column in data[line]) {
+        if(fields[column].type != "string" && !numPattern.test(data[line][column])){
+          fields[column].type = "string";
+        }
+      }
+    }  
+  }
+  //ToDo, improve me please
+  for (var f in fields) {
+    if(fields[f].type=="numeric"){
+      fields[f].kind="measure";
+    } else {
+      fields[f].kind="dimension";
+    }
+  }
+  return fields;
 }
 
 //I got this from http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
@@ -120,3 +149,4 @@ function CSVToArray(strData, strDelimiter) {
   // Return the parsed data.
   return (arrData);
 }
+
