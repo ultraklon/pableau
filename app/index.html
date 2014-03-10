@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"/>
 </head>
 <body>
+  <!--div ng-controller="GeneralController" class="main"-->
   <div file-dropzone ng-controller="GeneralController" class="main">
     <!--ul class="menu">
       <li><a href="#/view1">view1</a></li>
@@ -29,12 +30,27 @@
       </span>
     </div>
     <div class="workingDataArea" ng-controller="FileOpenController">
-      <div ng-controller="NonNumericColumnController" class="NonNumericColumnController">
-        <label ng-repeat="column in dataCommunicator.fields">{{ column.name }}</label> 
-        .
+      <div style="float:left">
+        <div ng-controller="NonNumericColumnController" ui-on-Drop="onDrop($event,$data,dataCommunicator.candidateFields)" class="NonNumericColumnController">
+          <!--label ng-repeat="column in dataCommunicator.fields track by $index" ui-draggable="true" drag="column.name" on-drop-success="dropSuccessHandler($event,$index,candidateFields)" class="candidateField">{{ column.name }}</label--> 
+          <label ng-repeat="column in dataCommunicator.candidateFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.candidateFields)" class="candidateField">{{ column.name }}</label> 
+   .
+        </div>
+        <div ng-controller="NumericColumnController" class="NumericColumnController">    
+          .
+        </div>
       </div>
-      <div ng-controller="NumericColumnController" class="NumericColumnController">    
-        .
+      <div style="float:left;width:70%;">
+        <div ui-on-Drop="onDrop($event,$data,dataCommunicator.columnFields)" class="ColumnDropDestination">
+          <label ng-repeat="column in dataCommunicator.columnFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.columnFields)" class="candidateField">{{ column.name }}</label> 
+          .
+        </div>
+       </div>
+       <div style="float:left;width:70%;">
+        <div ui-on-Drop="onDrop($event,$data,dataCommunicator.rowFields)" class="RowDropDestination">
+          <label ng-repeat="column in dataCommunicator.rowFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.rowFields)" class="candidateField">{{ column.name }}</label> 
+          .
+        </div>
       </div>
     </div>
     <script type="text/ng-template" id="myModalContent.html">
@@ -52,10 +68,12 @@
   <script src="lib/angular/angular.js"></script>
   <script src="lib/angular/angular-route.js"></script>
   <script src="lib/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+  <script src="lib/draganddrop/draganddrop.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/DataCommunicatorService.js"></script>
   <script src="js/controllers.js"></script>
+  <script src="js/ColumnDropDestinationController.js"></script>
   <script src="js/DropDownMenusController.js"></script>
   <script src="js/FileOpenController.js"></script>
   <script src="js/NonNumericColumnController.js"></script>
