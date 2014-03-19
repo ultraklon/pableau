@@ -2,7 +2,7 @@
 
 var moduleForDirectives = angular.module('myApp.directives');
 
-moduleForDirectives.directive('fileDropzone', ['$rootScope', 'dataCommunicatorService', function($rootScope, dataCommunicatorService) {
+moduleForDirectives.directive('fileDropzone', ['$rootScope', 'dataCommunicatorService', 'databaseService', function($rootScope, dataCommunicatorService, databaseService) {
   return {
     restrict: 'A',
     scope: {
@@ -24,7 +24,7 @@ moduleForDirectives.directive('fileDropzone', ['$rootScope', 'dataCommunicatorSe
           event.preventDefault();
         }
         file = event.dataTransfer.files[0];
-        readFile(file, dataCommunicatorService, $rootScope);
+        readFile(file, dataCommunicatorService, databaseService, $rootScope);
         return true;
       };
       validMimeTypes = attrs.fileDropzone;

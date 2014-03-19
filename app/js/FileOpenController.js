@@ -2,61 +2,50 @@
 
 var moduleForControllers = angular.module('myApp.controllers');
 
-moduleForControllers.controller('FileOpenController', ['$scope', 'dataCommunicatorService', function($scope,dataCommunicatorService) {
+moduleForControllers.controller('FileOpenController', ['$scope', 'dataCommunicatorService', 'databaseService', function($scope, dataCommunicatorService, databaseService) {
+  $scope.openDb = function(){ databaseService.createNewDb(); }
+
+  $scope.readAlgo = function(){ databaseService.readSomeField(); }
+
   $scope.dataCommunicator = dataCommunicatorService.content;
+
   $scope.dropSuccessHandler = function($event, index, array) {
     array.splice(index, 1);
   };
+
   $scope.onDrop = function($event, $data, array) {
     array.push($data);
   };
 }]);
 
-var FileOpenControllerFunction = function($scope, $modalInstance, dataCommunicatorService) {
+var FileOpenControllerFunction = function($scope, $modalInstance, dataCommunicatorService, databaseService) {
   $scope.cancel = function() {
     $modalInstance.close();
   }
   $scope.openTheFile = function(theFile) {
-    readFile(theFile, dataCommunicatorService);
+    readFile(theFile, dataCommunicatorService, databaseService);
     $modalInstance.close();
   }
 }
 
-/* Functions */
-function mergeDataWithSettings($scope) {
-  debugOutput($scope, buildTestConfig());
-  readFile($scope.param.file);
-}
-
-function debugOutput($scope, msg) {
-  $scope.object1 = msg;
-}
-
-function buildTestConfig() {
-  var obj = new Object();
-  obj.columns = new Array();
-  obj.columns[0] = "uno";
-  obj.columns[1] = "dos";
-  obj.rows = new Array();
-  obj.rows[0] = "filalaa";
-  return obj;
-}
-
-function readFile(fileRef, dataCommunicatorService, rootScope) {
+function readFile(fileRef, dataCommunicatorService, databaseService, rootScope) {
   var reader = new FileReader();
   // Closure to capture the file information.
   reader.onloadend = (function(fileRef, rootScope) {
     return function(e) {
       var data = CSVToArray(e.target.result, ",");
-      determineFields(data, dataCommunicatorService.content.candidateFields);
+      readMetadata(data, dataCommunicatorService.content.candidateFields);
+      dataCommunicatorService.filename = fileRef.name;
+      dataCommunicatorService.byteSize = fileRef.size;
       !rootScope || rootScope.$apply();
+      databaseService.createDatabase(data);
     };
   })(fileRef, rootScope);
   reader.readAsText(fileRef);
 }
 
 //goes through all the cells, create the field objects and infers it's type and other properties
-function determineFields(data, candidateFields) {
+function readMetadata(data, candidateFields) {
   var numPattern = new RegExp("^-?\\d*(\\.\\d+)?$");
   for (var line in data) {
     if (line == 0) {
