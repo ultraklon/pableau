@@ -100,3 +100,9 @@ body {
   width: 150px;
   height: 25px;
 }
+
+.graphDiv{
+  background-color: #FFAAAA;
+  width: 450px;
+  height: 425px;
+}

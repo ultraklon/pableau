@@ -8,12 +8,21 @@ moduleForControllers.controller('FileOpenController', ['$scope', 'dataCommunicat
   $scope.dataCommunicator = dataCommunicatorService.content;
 
   $scope.dropSuccessHandler = function($event, index, array) {
-    console.log(index);
     array.splice(index, 1);
   };
 
+  //adds the field to the list only if it's not already there
   $scope.onDrop = function($event, $data, array) {
-    array.push($data);
+    var found = false;
+    for(var d in array){
+      if(array[d].name == $data.name){
+        found = true;
+        break;
+      }
+    }
+    if(!found){
+      array.push($data);
+    }
   };
 }]);
 
@@ -34,6 +43,7 @@ function readFile(fileRef, dataCommunicatorService, databaseService, rootScope) 
     return function(e) {
       var data = CSVToArray(e.target.result, ",");
       readMetadata(data, dataCommunicatorService.content.candidateFields);
+      createsThe2FieldLists(dataCommunicatorService.content);
       dataCommunicatorService.filename = fileRef.name;
       dataCommunicatorService.byteSize = fileRef.size;
       !rootScope || rootScope.$apply();
@@ -41,6 +51,16 @@ function readFile(fileRef, dataCommunicatorService, databaseService, rootScope) 
     };
   })(fileRef, rootScope);
   reader.readAsText(fileRef);
+}
+
+function createsThe2FieldLists(content){
+  for(var f in content.candidateFields){
+    if(content.candidateFields[f].type == "numeric"){
+      content.candidateNumericFields.push(content.candidateFields[f]);
+    } else {
+      content.candidateNonNumericFields.push(content.candidateFields[f]);
+    }
+  }
 }
 
 //goes through all the cells, create the field objects and infers it's type and other properties
