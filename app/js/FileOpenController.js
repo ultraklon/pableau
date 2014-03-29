@@ -5,11 +5,10 @@ var moduleForControllers = angular.module('myApp.controllers');
 moduleForControllers.controller('FileOpenController', ['$scope', 'dataCommunicatorService', 'databaseService', function($scope, dataCommunicatorService, databaseService) {
   $scope.openDb = function(){ databaseService.createNewDb(); }
 
-  $scope.readAlgo = function(){ databaseService.readSomeField(); }
-
   $scope.dataCommunicator = dataCommunicatorService.content;
 
   $scope.dropSuccessHandler = function($event, index, array) {
+    console.log(index);
     array.splice(index, 1);
   };
 
