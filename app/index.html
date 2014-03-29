@@ -33,10 +33,11 @@
       <div style="float:left">
         <div ng-controller="NonNumericColumnController" ui-on-Drop="onDrop($event,$data,dataCommunicator.candidateFields)" class="NonNumericColumnController">
           <!--label ng-repeat="column in dataCommunicator.fields track by $index" ui-draggable="true" drag="column.name" on-drop-success="dropSuccessHandler($event,$index,candidateFields)" class="candidateField">{{ column.name }}</label--> 
-          <label ng-repeat="column in dataCommunicator.candidateFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.candidateFields)" class="candidateField">{{ column.name }}</label> 
+          <label ng-repeat="column in dataCommunicator.candidateFields | onlyNonNumericFilter track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.candidateFields)" class="candidateField">{{ column.name }}</label> 
    .
         </div>
         <div ng-controller="NumericColumnController" class="NumericColumnController">    
+          <label ng-repeat="column in dataCommunicator.candidateFields | onlyNumericFilter track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.candidateFields)" class="candidateField">{{ column.name }}</label> 
           .
         </div>
       </div>
