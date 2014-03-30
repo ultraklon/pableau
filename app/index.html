@@ -51,8 +51,8 @@
         </div>
         <div class="graphDiv" ng-controller="GoogleGraphController">
           .
-          <div id="chart_div" style="width: 900px; height: 500px;"></div>
           <button ng-click="mostrar()">mama</button>
+          <div google-chart chart="chart" style="{{chart.cssStyle}}"/>
         </div>
       </div>
     </div>
@@ -73,6 +73,7 @@
   <script src="lib/angular/angular-route.js"></script>
   <script src="lib/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
   <script src="lib/draganddrop/draganddrop.js"></script>
+  <script src="lib/googlechart/ng-google-chart.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/DatabaseService.js"></script>
