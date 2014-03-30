@@ -49,9 +49,10 @@
           <label ng-repeat="column in dataCommunicator.rowFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.rowFields)" class="candidateField">{{ column.name }}</label> 
           .
         </div>
-        <div class="graphDiv">
+        <div class="graphDiv" ng-controller="GoogleGraphController">
           .
           <div id="chart_div" style="width: 900px; height: 500px;"></div>
+          <button ng-click="mostrar()">mama</button>
         </div>
       </div>
     </div>
@@ -72,7 +73,6 @@
   <script src="lib/angular/angular-route.js"></script>
   <script src="lib/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
   <script src="lib/draganddrop/draganddrop.js"></script>
-  <script src="js/googleGraph.js"></script>
   <script src="js/app.js"></script>
   <script src="js/services.js"></script>
   <script src="js/DatabaseService.js"></script>
@@ -83,6 +83,7 @@
   <script src="js/FileOpenController.js"></script>
   <script src="js/NonNumericColumnController.js"></script>
   <script src="js/NumericColumnController.js"></script>
+  <script src="js/GoogleGraphController.js"></script>
   <script src="js/filters.js"></script>
   <script src="js/directives.js"></script>
   <script src="js/FileSelectorDirective.js"></script>
