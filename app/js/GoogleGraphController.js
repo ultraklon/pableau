@@ -5,6 +5,7 @@ var chart;
 var moduleForControllers = angular.module('myApp.controllers');
 moduleForControllers.controller('GoogleGraphController', ['$scope', 'dataCommunicatorService', function($scope, dataCommunicatorService) {
   $scope.mostrar=function(){ $scope.chart.options.title="jojojo" };
+  $scope.chart=dataCommunicatorService.chart;
   go($scope);
 }]);
 
