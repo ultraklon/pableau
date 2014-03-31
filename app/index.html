@@ -41,11 +41,11 @@
         </div>
       </div>
       <div style="float:left;width:70%;">
-        <div ui-on-Drop="onDrop($event,$data,dataCommunicator.columnFields)" class="ColumnDropDestination">
+        <div ui-on-Drop="onColumnDrop($event,$data)" class="ColumnDropDestination">
           <label ng-repeat="column in dataCommunicator.columnFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.columnFields)" class="candidateField">{{ column.name }}</label> 
           .
         </div>
-        <div ui-on-Drop="onDrop($event,$data,dataCommunicator.rowFields)" class="RowDropDestination">
+        <div ui-on-Drop="onRowDrop($event,$data,dataCommunicator.rowFields)" class="RowDropDestination">
           <label ng-repeat="column in dataCommunicator.rowFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.rowFields)" class="candidateField">{{ column.name }}</label> 
           .
         </div>

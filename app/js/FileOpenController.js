@@ -12,16 +12,29 @@ moduleForControllers.controller('FileOpenController', ['$scope', 'dataCommunicat
   };
 
   //adds the field to the list only if it's not already there
-  $scope.onDrop = function($event, $data, array) {
+  $scope.onColumnDrop = function($event, $data) {
     var found = false;
-    for(var d in array){
-      if(array[d].name == $data.name){
+    for(var d in dataCommunicatorService.content.columnFields){
+      if(dataCommunicatorService.content.columnFields[d].name == $data.name){
         found = true;
         break;
       }
     }
     if(!found){
-      array.push($data);
+      dataCommunicatorService.content.columnFields.push($data);
+    }
+  };
+
+  $scope.onRowDrop = function($event, $data) {
+    var found = false;
+    for(var d in dataCommunicatorService.content.rowFields){
+      if(dataCommunicatorService.content.rowFields[d].name == $data.name){
+        found = true;
+        break;
+      }
+    }
+    if(!found){
+      dataCommunicatorService.content.rowFields.push($data);
     }
   };
 }]);

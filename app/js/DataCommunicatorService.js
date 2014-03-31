@@ -14,4 +14,3 @@ moduleForServices.factory('dataCommunicatorService', function() {
     chart: {}
   }
 });
-
