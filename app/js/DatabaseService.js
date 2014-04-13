@@ -2,8 +2,9 @@ var moduleForServices = angular.module('myApp.services');
 
 var obj = new Object();
 var dataCommLocal;
+var log;
 
-moduleForServices.factory('databaseService', ['dataCommunicatorService', function(dataCommunicatorService) {
+moduleForServices.factory('databaseService', ['$log', 'dataCommunicatorService', function(logService, dataCommunicatorService) {
   obj.readSomeField = readSomeField;
   obj.createDatabase = function(data) {
     createDatabase(data, dataCommunicatorService)
@@ -13,6 +14,7 @@ moduleForServices.factory('databaseService', ['dataCommunicatorService', functio
     getCols(dataCommunicatorService, callbackFunction);
   };
   dataCommLocal=dataCommunicatorService;
+  log = logService;
   return obj;
 }]);
 
@@ -44,7 +46,7 @@ function createDatabase(data, dataCommunicatorService) {
         }
         if (dataList) {
           var sqlQuery = 'INSERT INTO maintable2 (' + fieldList + ') VALUES (' + dataList + ')';
-          //console.log(sqlQuery);
+          //log.debug(sqlQuery);
           //          tx.executeSql(sqlQuery, null, function(transaction, error) { alert("Error1 : " + JSON.stringify(error.message)); });
           tx.executeSql(sqlQuery);
         }
@@ -92,7 +94,7 @@ function getCols(dataCommunicator, callbackFunction) {
   if (obj.db) {
     obj.db.transaction(function(tx) {
       var sqlQuery = 'SELECT ' + getCommaSeparatedList(dataCommunicator.content.columnFields) + ' FROM maintable2 GROUP BY ' + getCommaSeparatedList(dataCommunicator.content.columnFields);
-      console.log(sqlQuery)
+      log.debug(sqlQuery)
       tx.executeSql(sqlQuery, [], function(tx, rs) {
         callbackFunction(rs.rows);
       });
@@ -105,7 +107,7 @@ function selectQuery(scope, dataCommunicator, callbackFunction) {
   if(dataCommunicator.graphicType=="ColumnChart"){
     executeColumnChartQuery(scope, dataCommunicator, callbackFunction);
   }else{
-    console.log("ERROR: Invalid graphic type");
+    log.debug("ERROR: Invalid graphic type");
   }
 }
 
@@ -146,7 +148,7 @@ function executeColumnChartQuery(scope, dataCommunicator, callbackFunction){
 }
 
 function executeQuery(scope, sqlQuery, callbackFunction){
-  console.log(sqlQuery)
+  log.debug(sqlQuery)
   if (obj.db) {
     obj.db.transaction(function(tx) {
       tx.executeSql(sqlQuery, [], function(tx, rs) {

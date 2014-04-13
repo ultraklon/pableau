@@ -3,9 +3,10 @@
 var chart;
 var dataCommLocal;
 var scopeLocal;
+var log;
 
 var moduleForControllers = angular.module('myApp.controllers');
-moduleForControllers.controller('GoogleGraphController', ['$scope', 'dataCommunicatorService', 'databaseService', function($scope, dataCommunicatorService, databaseService) {
+moduleForControllers.controller('GoogleGraphController', ['$scope', '$log', 'dataCommunicatorService', 'databaseService', function($scope, logService, dataCommunicatorService, databaseService) {
   $scope.mostrar=function(){
   }
   $scope.chart = dataCommunicatorService.chart;
@@ -21,7 +22,8 @@ moduleForControllers.controller('GoogleGraphController', ['$scope', 'dataCommuni
   });
   dataCommLocal = dataCommunicatorService;
   scopeLocal = $scope;
-  go($scope);
+  log = logService;
+  //go($scope);
 }]);
 
 function tmpSetParams(dataCommunicatorService){
@@ -33,7 +35,7 @@ function recalculteGraphic($scope, dataCommunicatorService, databaseService){
   recalculate($scope, dataCommunicatorService, databaseService);
 }
 
-function go($scope){
+/*function go($scope){
     var chart1 = {};
     chart1.type = "ColumnChart";
     chart1.cssStyle = "height:200px; width:300px;";
@@ -85,7 +87,7 @@ function go($scope){
 
     $scope.chart = chart1;
 
-}
+}*/
 
 function decideIfValidParams($scope, dataCommunicator){
   var gt = graphicTypes[dataCommunicator.graphicType];
@@ -192,7 +194,7 @@ function buildChartColumnChart(scope, lines){
 
     chart1.formatters = {};
 
-    console.log("chart: " + JSON.stringify(chart1));
+    log.debug("chart: " + JSON.stringify(chart1));
     
     scope.chart = chart1;
     scope.$apply()
