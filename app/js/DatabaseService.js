@@ -44,7 +44,7 @@ function createDatabase(data, dataCommunicatorService) {
         }
         if (dataList) {
           var sqlQuery = 'INSERT INTO maintable2 (' + fieldList + ') VALUES (' + dataList + ')';
-          console.log(sqlQuery);
+          //console.log(sqlQuery);
           //          tx.executeSql(sqlQuery, null, function(transaction, error) { alert("Error1 : " + JSON.stringify(error.message)); });
           tx.executeSql(sqlQuery);
         }

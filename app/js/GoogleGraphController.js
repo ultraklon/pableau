@@ -22,9 +22,6 @@ moduleForControllers.controller('GoogleGraphController', ['$scope', 'dataCommuni
   dataCommLocal = dataCommunicatorService;
   scopeLocal = $scope;
   go($scope);
-  $scope.showingChart = true;
-  $scope.showingMessage = false;
-  $scope.chartMessage = "";
 }]);
 
 function tmpSetParams(dataCommunicatorService){
@@ -91,10 +88,6 @@ function go($scope){
 }
 
 function decideIfValidParams($scope, dataCommunicator){
-  $scope.showingChart = true;
-  $scope.showingMessage = false;
-  $scope.chartMessage = "";
-  return true;
   var gt = graphicTypes[dataCommunicator.graphicType];
   if(!gt){
     failInvalidParams($scope, "Invalid Graphic Type");
@@ -163,19 +156,6 @@ function buildChartColumnChart(scope, lines){
       chart1.data.cols.push(currentReferenceItem);
     }
     
-    /*
-    chart1.data = {"cols": [
-        {id: "month", label: "Month", type: "string"},
-        {id: "laptop-id", label: "Laptop", type: "number"},
-        {id: "desktop-id", label: "Desktop", type: "number"},
-        {id: "server-id", label: "Server", type: "number"},
-        {id: "cost-id", label: "Shipping", type: "number"}
-    ], "rows": [
-      */  
-    /*var cols = distinct(extractColumn(lines, dataCommLocal.content.columnFields[0].name));
-    console.log("cols: " + JSON.stringify(cols));
-    var rows = distinct(extractColumn(lines, dataCommLocal.content.rowFields[0].name));
-    console.log("rows: " + JSON.stringify(rows));*/
     chart1.data["rows"] = new Array();
     var lastColumn='no column';
     var currentObject = new Object();
@@ -197,40 +177,6 @@ function buildChartColumnChart(scope, lines){
       currentObject.c.push(currentItem);
     }
     chart1.data.rows.push(currentObject);
-    /*return;
-    chart1.data = {
-    "rows": [
-        {c: [
-            {v: "January"},
-            {v: 19, f: "42 items"},
-            {v: 12, f: "Ony 12 items"},
-            {v: 7, f: "7 servers"},
-            {v: 4}
-        ]},
-        {c: [
-            {v: "February"},
-            {v: 13},
-            {v: 1, f: "1 unit (Out of stock this month)"},
-            {v: 12},
-            {v: 2}
-        ]},
-        {c: [
-            {v: "March"},
-            {v: 24},
-            {v: 0},
-            {v: 11},
-            {v: 6}
-
-        ]}
-    ]};
-    chart1.data.rows = new Array();
-    //chart1.data.cols[0] = {id: dataCommunicator.content.columnFields[0].name, label: dataCommunicator.content.columnFields[0].name, type: "string"};
-    var cols = database.getCols(addColsToChart);
-    chart1.data.cols[1] =    {id: "laptop-id", label: "Laptop1", type: "number"},
- chart1.data.cols[2] =        {id: "desktop-id", label: "Desktop", type: "number"},
- chart1.data.cols[3] =        {id: "server-id", label: "Server", type: "number"},
- chart1.data.cols[4] =        {id: "cost-id", label: "Shipping", type: "number"}
-*/
     chart1.options = {
         "title": "Sales per month",
         "isStacked": "true",
@@ -246,10 +192,10 @@ function buildChartColumnChart(scope, lines){
 
     chart1.formatters = {};
 
-    //scopeLocal.chart = chart1;
     console.log("chart: " + JSON.stringify(chart1));
     
     scope.chart = chart1;
+    scope.$apply()
     
 }
 
