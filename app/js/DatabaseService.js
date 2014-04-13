@@ -28,6 +28,13 @@ function createDatabase(data, dataCommunicatorService) {
     tx.executeSql(sqlCreate);
   });
   obj.db.transaction(function(tx) {
+    var questionMarks='';
+    for(var cc=0; cc<dataCommunicatorService.content.candidateFields.length-1; cc++){
+      questionMarks += '?, ';
+    }
+    questionMarks += '?';
+    var sqlQuery = 'INSERT INTO maintable2 (' + fieldList + ') VALUES (' + questionMarks+ ')';
+    log.debug('query: ' + sqlQuery);
     for (var d in data) {
       if (d > 0) {
         var isFirst = true;
@@ -41,15 +48,12 @@ function createDatabase(data, dataCommunicatorService) {
               cellValue = 0;
             }
           }
-          dataList += (isFirst ? "": ",") + cellValue;
+          //dataList += (isFirst ? "": ",") + cellValue;
           isFirst = false;
         }
-        if (dataList) {
-          var sqlQuery = 'INSERT INTO maintable2 (' + fieldList + ') VALUES (' + dataList + ')';
-          //log.debug(sqlQuery);
-          //          tx.executeSql(sqlQuery, null, function(transaction, error) { alert("Error1 : " + JSON.stringify(error.message)); });
-          tx.executeSql(sqlQuery);
-        }
+        //log.debug(sqlQuery);
+        //          tx.executeSql(sqlQuery, null, function(transaction, error) { alert("Error1 : " + JSON.stringify(error.message)); });
+        tx.executeSql(sqlQuery, data[d]);
       }
     }
   });
