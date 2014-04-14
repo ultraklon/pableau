@@ -9,14 +9,6 @@
 <body>
   <!--div ng-controller="GeneralController" class="main"-->
   <div file-dropzone ng-controller="GeneralController" class="main">
-    <!--ul class="menu">
-      <li><a href="#/view1">view1</a></li>
-      <li><a href="#/view2">view2</a></li>
-    </ul>
-  
-    <div ng-view></div>
-  
-    <div>Angular seed app: v<span app-version></span></div-->
     <div class="topMenuBar">
       <span class="dropdown" ng-controller="DropdownFile">
         <a class="dropdown-toggle">
@@ -30,30 +22,52 @@
       </span>
     </div>
     <div class="workingDataArea" ng-controller="FileOpenController">
-      <div style="float:left">
-        <div ng-controller="NonNumericColumnController" ui-on-Drop="" class="NonNumericColumnController">
-          <label ng-repeat="column in dataCommunicator.candidateNonNumericFields track by $index" ui-draggable="true" drag="column" on-drop-success="" class="candidateField">{{ column.name }}</label> 
-   .
+      <div style="float:left" class="candidateFieldsColumn">
+        <div>
+          <div class="candidateFieldsTitle">
+            Dimensions
+          </div>
+          <div ng-controller="NonNumericColumnController" ui-on-Drop="" class="NonNumericColumnController">
+            <label ng-repeat="column in dataCommunicator.candidateNonNumericFields track by $index" ui-draggable="true" drag="column" on-drop-success="" class="candidateField">{{ column.name }}</label> 
+            
+          </div>
         </div>
-        <div ng-controller="NumericColumnController" ui-on-Drop="" class="NumericColumnController">    
-          <label ng-repeat="column in dataCommunicator.candidateNumericFields track by $index" ui-draggable="true" drag="column" on-drop-success="" class="candidateField">{{ column.name }}</label> 
-          .
+        <div>
+          <div class="candidateFieldsTitle">
+            Measures
+          </div>
+          <div ng-controller="NumericColumnController" ui-on-Drop="" class="NumericColumnController">    
+            <label ng-repeat="column in dataCommunicator.candidateNumericFields track by $index" ui-draggable="true" drag="column" on-drop-success="" class="candidateField">{{ column.name }}</label> 
+            
+          </div>
         </div>
       </div>
       <div style="float:left;width:70%;">
-        <div ui-on-Drop="onColumnDrop($event,$data)" class="ColumnDropDestination">
-          <label ng-repeat="column in dataCommunicator.columnFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.columnFields)" class="candidateField">{{ column.name }}</label> 
-          .
+        <div ui-on-Drop="onColumnDrop($event,$data)" class="DropDestination ColumnDropDestination">
+          <label class="DropDestinationTitle">Columns</label>
+          <label ng-repeat="column in dataCommunicator.columnFields track by $index" ui-draggable="true"
+              drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.columnFields)"
+              class="decidedField">
+                {{ column.name }}
+          </label> 
         </div>
-        <div ui-on-Drop="onRowDrop($event,$data,dataCommunicator.rowFields)" class="RowDropDestination">
-          <label ng-repeat="column in dataCommunicator.rowFields track by $index" ui-draggable="true" drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.rowFields)" class="candidateField">{{ column.name }}</label> 
-          .
+        <div ui-on-Drop="onRowDrop($event,$data,dataCommunicator.rowFields)" class="DropDestination RowDropDestination">
+          <label class="DropDestinationTitle">Rows</label>
+          <label ng-repeat="column in dataCommunicator.rowFields track by $index" ui-draggable="true"
+              drag="column" on-drop-success="dropSuccessHandler($event,$index,dataCommunicator.rowFields)"
+              class="decidedField">
+                {{ column.name }}
+          </label> 
         </div>
         <div class="graphDiv" ng-controller="GoogleGraphController">
-          .
           <div google-chart ng-show="showingChart" chart="chart" style="{{chart.cssStyle}}"/>
         </div>
-        <div ng-show="showingMessage" class="messageInsteadOfChart">{{ chartMessage  }}</div>
+        <div ng-show="showingMessage" class="messageInsteadOfChart">
+          <div class="messageInsteadOfChartTitle">Invalid Data</div>
+          <div class="messageInsteadOfChartMessage">
+            {{ chartMessage }}
+          </div>
+        </div>
       </div>
     </div>
     <script type="text/ng-template" id="myModalContent.html">
